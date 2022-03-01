@@ -1,25 +1,43 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useRoutes } from 'react-router-dom';
+import useMovies from './Hooks/useMovies';
+import { useModal } from './Hooks/useModal';
+import {ROUTES} from './Routes/routes';
+import Paper from '@mui/material/Paper';
+import Container from '@mui/material/Container';
+import Title from './Components/Title';
+import Toolbar from './Components/ToolBar';
+import Search from './Components/Search';
+import Button from './Components/Button';
+import Modal from './Components/Modal';
+import Votes from './View/Votes';
+import Switch from './Components/Switch';
 
-function App() {
+const App : React.FC = () => {
+
+  const routes = useRoutes(ROUTES);
+  const {isModalVisible, setModalVisible} = useModal();
+
+  useMovies();
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Paper elevation={0}>
+        <Title variant='h2' text="Movie Awards" customStyles={{fontFamily: 'Cinzel Decorative', margin: 'auto', padding: '15px 0'}}/>
+        <Toolbar>
+            <Search />
+            
+          </Toolbar>
+        <Container sx={{height: '100vh'}}>
+          {routes}
+        </Container>
+        <Toolbar>
+            <Button handleOnClick={() => setModalVisible(true)}>SUBMIT</Button>
+            <Switch />
+            <Modal isVisible={isModalVisible} setIsVisible={setModalVisible} >
+              <Votes />
+            </Modal>
+          </Toolbar>
+      </Paper>
   );
 }
 

@@ -1,6 +1,27 @@
+
 const express = require('express');
+const morgan = require("morgan");
+const cors = require("cors");
 
 const app = express();
+
+let origin = process.eventNames.NODE_ENV === 'production' ? 
+    "https://movies-ballot.sebastiantobar.dev"
+    : "*"
+
+app.use(morgan("dev"));
+app.use(cors());
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", origin);
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+  next();
+});
+    
 
 const port = process.env.PORT || 8080;
 app.listen(port);

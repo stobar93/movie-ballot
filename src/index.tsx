@@ -1,12 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
+import './index.css';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
+import Providers from './Providers/index';
+import "@fontsource/cinzel-decorative/400.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Providers>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Providers>
   </React.StrictMode>,
   document.getElementById('root')
 );
